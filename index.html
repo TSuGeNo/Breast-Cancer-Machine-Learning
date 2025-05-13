@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .form-heading {
+            text-align: center;
+            color: #6200ea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar span {
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: #6200ea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        h3 {
+            color: #444;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #6200ea;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Breast Cancer Prediction System</h1>
+        <p>Utilizing Advanced Metrics for Accurate Diagnosis</p>
+    </header>
+    <main>
+        <div class="form-container">
+            <div class="progress-bar">
+                <span></span>
+            </div>
+            <div class="form-heading">Input Patient Data</div>
+            <form action="/predict" method="POST">
+                <div class="form-grid">
+                    {% for feature in [
+                        "mean_radius", "mean_texture", "mean_perimeter", "mean_area",
+                        "mean_smoothness", "mean_compactness", "mean_concavity",
+                        "mean_concave_points", "mean_symmetry", "mean_fractal_dimension",
+                        "radius_error", "texture_error", "perimeter_error", "area_error",
+                        "smoothness_error", "compactness_error", "concavity_error",
+                        "concave_points_error", "symmetry_error", "fractal_dimension_error",
+                        "worst_radius", "worst_texture", "worst_perimeter", "worst_area",
+                        "worst_smoothness", "worst_compactness", "worst_concavity",
+                        "worst_concave_points", "worst_symmetry", "worst_fractal_dimension"] %}
+                        <div>
+                            <label for="{{ feature }}">{{ feature.replace('_', ' ').title() }}:</label>
+                            <input type="number" step="any" name="{{ feature }}" id="{{ feature }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Predict</button>
+            </form>
+            {% if prediction_text %}
+                <h3>{{ prediction_text }}</h3>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 Breast Cancer Prediction System. All rights reserved.
+    </footer>
+</body>
+</html>
